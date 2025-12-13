@@ -60,6 +60,20 @@ class LocalAiAgent:
 
     def invoke(self, user_input: str):
         return self.agent.invoke(
-            input={"messages": [{"role": "user", "content": user_input}]},
+            input=self._convert_to_messages(user_input=user_input),
             config=self.context_config
-        )["messages"][-1]
+        )
+
+    def stream_messages(self, user_input: str):
+        return self.agent.stream(
+            input=self._convert_to_messages(user_input=user_input),
+            config=self.context_config,
+            stream_mode="messages"
+        )
+
+    def _convert_to_messages(self, user_input: str, role: str = "user") -> dict:
+        return {
+            "messages": [
+                {"role": role, "content": user_input}
+            ]
+        }
