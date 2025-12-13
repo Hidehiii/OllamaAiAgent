@@ -1,6 +1,7 @@
+from langchain.tools import tool
 import os
 
-
+@tool
 def get_current_directory():
     """
     Get the current working directory.
@@ -9,6 +10,7 @@ def get_current_directory():
     """
     return os.getcwd()
 
+@tool
 def get_current_date():
     """
     Get the current date.
@@ -18,6 +20,7 @@ def get_current_date():
     from datetime import datetime
     return datetime.now().strftime("%Y-%m-%d")
 
+@tool
 def get_current_time():
     """
     Get the current time.

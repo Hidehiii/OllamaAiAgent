@@ -19,7 +19,7 @@ def convert_agent_stream_output_to_readable_text(node, content, stream_mode : St
         elif len(content) == 1 and node == "tools":
             data = content[0]
             if data["type"] == "text":
-                return "tools return value: " + data["text"] + "\n"
+                return "tools return value: " + data["text"] + "\n\n"
             else:
                 raise ValueError(f"Unknown content type: {data['type']}")
         else:
