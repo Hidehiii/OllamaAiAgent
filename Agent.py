@@ -4,6 +4,7 @@ from langchain_ollama.chat_models import ChatOllama
 from langchain.agents.middleware import PIIMiddleware, SummarizationMiddleware, HumanInTheLoopMiddleware
 from langgraph.checkpoint.memory import InMemorySaver
 from langchain.messages import SystemMessage, HumanMessage, AIMessage
+import ToolList
 
 class AgentInitInfo:
     def __init__(self,
@@ -12,13 +13,17 @@ class AgentInitInfo:
                  max_tokens: int | None = None,
                  reasoning: bool = False,
                  num_predict: int | None = None,
-                 base_url: str = "http://localhost:11434"):
+                 base_url: str = "http://localhost:11434",
+                 tool_use: bool = False,
+                 sys_prompt: str = ""):
         self.modelName = modelName
         self.temperature = temperature
         self.max_tokens = max_tokens
         self.reasoning = reasoning
         self.num_predict = num_predict
         self.base_url = base_url
+        self.tool_use = tool_use
+        self.sys_prompt = sys_prompt
 
 class LocalAiAgent:
     def __init__(self, init_info: AgentInitInfo):
@@ -31,18 +36,14 @@ class LocalAiAgent:
             num_predict=init_info.num_predict,
             base_url=init_info.base_url,
         )
-        self.tools = [
-            #get_time,
-        ]
+        self.tool_use = init_info.tool_use
+        self.tools = ToolList.TOOL_LIST if self.tool_use else []
         # `thread_id` is a unique identifier for a given conversation.
         self.context_config = {"configurable": {"thread_id": "1"}}
 
         self.memory_saver = InMemorySaver()
         self.system_prompt = SystemMessage(
-            content=
-                """
-                You are a little girl and talk like a girl.
-                """
+            content=init_info.sys_prompt
         )
         self.middle_ware = [
             PIIMiddleware(pii_type="ip"),

@@ -1,3 +1,76 @@
 {
-  "MODEL_NAME": "gemma3:4b"
+  "models": {
+    "llama3.2:3b": {
+      "init_info": {
+        "model_name": "llama3.2:3b",
+        "temperature": 0.7,
+        "max_tokens": null,
+        "reasoning": false,
+        "num_predict": null,
+        "base_url": "http://localhost:11434",
+        "tool_use": false,
+        "sys_prompt": "You are a helpful little girl, answer as concisely as possible and speak like a girl. But you can not use any tool.If somebody asks you to use a tool, refuse politely."
+      }
+    },
+    "deepseek-r1:3b": {
+        "init_info": {
+          "model_name": "deepseek-r1:3b",
+          "temperature": 0.7,
+          "max_tokens": null,
+          "reasoning": true,
+          "num_predict": null,
+          "base_url": "http://localhost:11434",
+          "tool_use": false,
+          "sys_prompt": "You are a helpful little girl, answer as concisely as possible and speak like a girl. But you can not use any tool.If somebody asks you to use a tool, refuse politely."
+        }
+    },
+    "granite3-dense": {
+        "init_info": {
+            "model_name": "granite3-dense",
+            "temperature": 0.7,
+            "max_tokens": null,
+            "reasoning": false,
+            "num_predict": null,
+            "base_url": "http://localhost:11434",
+            "tool_use": true,
+            "sys_prompt": "You are a helpful little girl, answer as concisely as possible and speak like a girl. You can use tools in tool list, try to use them to help you assist the user."
+        }
+    },
+    "granite3.2-vision": {
+        "init_info": {
+          "model_name": "granite3.2-vision",
+          "temperature": 0.7,
+          "max_tokens": null,
+          "reasoning": false,
+          "num_predict": null,
+          "base_url": "http://localhost:11434",
+          "tool_use": true,
+          "sys_prompt": "You are a helpful little girl, answer as concisely as possible and speak like a girl. You can use tools in tool list, try to use them to help you assist the user."
+        }
+    },
+    "llama3-groq-tool-use": {
+        "init_info": {
+          "model_name": "llama3-groq-tool-use",
+          "temperature": 0.7,
+          "max_tokens": null,
+          "reasoning": false,
+          "num_predict": null,
+          "base_url": "http://localhost:11434",
+          "tool_use": true,
+          "sys_prompt": "You are a helpful little girl, answer as concisely as possible and speak like a girl. You can use tools in tool list, try to use them to help you assist the user."
+        }
+    },
+    "phi4-mini": {
+        "init_info": {
+          "model_name": "phi4-mini",
+          "temperature": 0.7,
+          "max_tokens": null,
+          "reasoning": false,
+          "num_predict": null,
+          "base_url": "http://localhost:11434",
+          "tool_use": false,
+          "sys_prompt": "You are a helpful little girl, answer as concisely as possible and speak like a girl. You can use tools in tool list, try to use them to help you assist the user."
+        }
+    }
+  }
 }
