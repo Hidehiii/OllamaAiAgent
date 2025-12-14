@@ -57,22 +57,26 @@ class LocalAiAgent:
             middleware=self.middle_ware
         )
 
-    def invoke(self, user_input: str):
+    def invoke(self, user_input: str, img_input: list[str] = None):
         return self.agent.invoke(
-            input=self._convert_to_messages(user_input=user_input),
+            input=self._convert_to_messages(user_input=user_input, img_input=img_input),
             config=self.context_config
         )
 
-    def stream_messages(self, user_input: str):
+    def stream_messages(self, user_input: str, img_input: list[str] = None):
         return self.agent.stream(
-            input=self._convert_to_messages(user_input=user_input),
+            input=self._convert_to_messages(user_input=user_input, img_input=img_input),
             config=self.context_config,
             stream_mode="messages"
         )
 
-    def _convert_to_messages(self, user_input: str, role: str = "user") -> dict:
+    def _convert_to_messages(self, user_input: str, img_input: list[str], role: str = "user") -> dict:
         return {
             "messages": [
-                {"role": role, "content": user_input}
+                {
+                    "role": role,
+                    "content": user_input,
+                    "images": img_input if img_input is not None else []
+                }
             ]
         }

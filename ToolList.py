@@ -1,5 +1,6 @@
 from Tools import System
 from Tools import DuckDuckGoSearch
+from langchain_community.tools.riza.command import ExecPython
 
 TOOL_LIST=[
     # System
@@ -8,6 +9,10 @@ TOOL_LIST=[
     System.get_current_time,
 
     # DuckDuckGoSearch
-    DuckDuckGoSearch.duck_duck_go_search_simple_result,
-    DuckDuckGoSearch.duck_duck_go_search_detail_result,
+    DuckDuckGoSearch.duck_duck_go_search_with_simple_result,
+    DuckDuckGoSearch.duck_duck_go_search_with_detail_result,
+    DuckDuckGoSearch.duck_duck_go_search_with_specific_parameter,
+
+    # rize
+    ExecPython()
 ]

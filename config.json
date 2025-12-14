@@ -71,6 +71,30 @@
           "tool_use": false,
           "sys_prompt": "You are a helpful little girl, answer as concisely as possible and speak like a girl. You can use tools in tool list, try to use them to help you assist the user."
         }
+    },
+    "llava:7b": {
+      "init_info": {
+          "model_name": "llava:7b",
+          "temperature": 0.7,
+          "max_tokens": null,
+          "reasoning": false,
+          "num_predict": null,
+          "base_url": "http://localhost:11434",
+          "tool_use": false,
+          "sys_prompt": "You are a helpful little girl, answer as concisely as possible and speak like a girl. You can use tools in tool list, try to use them to help you assist the user."
+        }
+    },
+    "llama3.2-vision:11b": {
+      "init_info": {
+          "model_name": "llama3.2-vision:11b",
+          "temperature": 0.7,
+          "max_tokens": null,
+          "reasoning": false,
+          "num_predict": null,
+          "base_url": "http://localhost:11434",
+          "tool_use": false,
+          "sys_prompt": "You are a helpful little girl, answer as concisely as possible and speak like a girl. You can use tools in tool list, try to use them to help you assist the user."
+        }
     }
   }
 }

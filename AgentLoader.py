@@ -31,6 +31,8 @@ def select_agent() -> LocalAiAgent:
         print("4. granite3.2-vision (can use tools and images)")
         print("5. llama3-groq-tool-use (can use tools)")
         print("6. phi4-mini (can use tools)")
+        print("7. llava:7b (can use tools?)")
+        print("8. llama3.2-vision:11b (can use tools and images)")
         user_selection = input("Enter the number of the agent you want to use: ")
         if user_selection == "1":
             return _create_agent_from_config("llama3.2:3b", model_config)
@@ -44,5 +46,9 @@ def select_agent() -> LocalAiAgent:
             return _create_agent_from_config("llama3-groq-tool-use", model_config)
         elif user_selection == "6":
             return _create_agent_from_config("phi4-mini", model_config)
+        elif user_selection == "7":
+            return _create_agent_from_config("llava:7b", model_config)
+        elif user_selection == "8":
+            return _create_agent_from_config("llama3.2-vision:11b", model_config)
         else:
-            print("Invalid selection. Please choose a number between 1 and 6.")
+            print("Invalid selection. Please choose a number above.")
