@@ -2,7 +2,7 @@ from AgentLoader import select_agent
 from Utils import print_agent_stream_response
 
 def main():
-    agent = select_agent()
+    agent = select_agent(op_env="CommandLine")
     while True:
         user_input = input("User: ")
         #response = agent.invoke(user_input)

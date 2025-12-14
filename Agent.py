@@ -4,6 +4,9 @@ from langchain.agents.middleware import PIIMiddleware, SummarizationMiddleware, 
 from langgraph.checkpoint.memory import InMemorySaver
 from langchain.messages import SystemMessage, HumanMessage, AIMessage
 import ToolList
+from typing import Literal
+
+AgentOperateEnv = Literal["CommandLine", "LanggraphChatUi"]
 
 class AgentInitInfo:
     def __init__(self,
@@ -14,7 +17,8 @@ class AgentInitInfo:
                  num_predict: int | None = None,
                  base_url: str = "http://localhost:11434",
                  tool_use: bool = False,
-                 sys_prompt: str = ""):
+                 sys_prompt: str = "",
+                 agent_operate_env: AgentOperateEnv = "LanggraphChatUi"):
         self.modelName = modelName
         self.temperature = temperature
         self.max_tokens = max_tokens
@@ -23,6 +27,7 @@ class AgentInitInfo:
         self.base_url = base_url
         self.tool_use = tool_use
         self.sys_prompt = sys_prompt
+        self.agent_operate_env = agent_operate_env
 
 class LocalAiAgent:
     def __init__(self, init_info: AgentInitInfo):
@@ -53,9 +58,12 @@ class LocalAiAgent:
             model=self.model,
             tools=self.tools,
             system_prompt=self.system_prompt,
-            checkpointer=self.memory_saver,
+            checkpointer=self.memory_saver if init_info.agent_operate_env == "CommandLine" else None,
             middleware=self.middle_ware
         )
+
+    def get_agent(self):
+        return self.agent
 
     def invoke(self, user_input: str, img_input: list[str] = None):
         return self.agent.invoke(

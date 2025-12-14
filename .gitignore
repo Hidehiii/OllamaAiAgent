@@ -2,3 +2,5 @@
 Agent.cpython-311.pyc
 *.pyc
 Temp
+.env
+.langgraph_api

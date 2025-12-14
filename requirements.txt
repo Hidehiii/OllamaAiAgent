@@ -9,3 +9,4 @@ rizaio==0.12.0
 pillow==10.2.0
 mss==10.1.0
 pygetwindow==0.0.9
+langgraph-cli==0.4.9
