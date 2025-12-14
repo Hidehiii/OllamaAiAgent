@@ -8,8 +8,7 @@
         "reasoning": false,
         "num_predict": null,
         "base_url": "http://localhost:11434",
-        "tool_use": false,
-        "sys_prompt": "You are a helpful little girl, answer as concisely as possible and speak like a girl. But you can not use any tool.If somebody asks you to use a tool, refuse politely."
+        "tool_use": false
       }
     },
     "deepseek-r1:3b": {
@@ -20,8 +19,7 @@
           "reasoning": true,
           "num_predict": null,
           "base_url": "http://localhost:11434",
-          "tool_use": false,
-          "sys_prompt": "You are a helpful little girl, answer as concisely as possible and speak like a girl. But you can not use any tool.If somebody asks you to use a tool, refuse politely."
+          "tool_use": false
         }
     },
     "granite3-dense": {
@@ -32,8 +30,7 @@
             "reasoning": false,
             "num_predict": null,
             "base_url": "http://localhost:11434",
-            "tool_use": true,
-            "sys_prompt": "You are a helpful little girl, answer as concisely as possible and speak like a girl. You can use tools in tool list, try to use them to help you assist the user."
+            "tool_use": true
         }
     },
     "granite3.2-vision": {
@@ -44,8 +41,7 @@
           "reasoning": false,
           "num_predict": null,
           "base_url": "http://localhost:11434",
-          "tool_use": true,
-          "sys_prompt": "You are a helpful little girl, answer as concisely as possible and speak like a girl. You can use tools in tool list, try to use them to help you assist the user."
+          "tool_use": true
         }
     },
     "llama3-groq-tool-use": {
@@ -56,8 +52,7 @@
           "reasoning": false,
           "num_predict": null,
           "base_url": "http://localhost:11434",
-          "tool_use": true,
-          "sys_prompt": "You are a helpful little girl, answer as concisely as possible and speak like a girl. You can use tools in tool list, try to use them to help you assist the user."
+          "tool_use": true
         }
     },
     "phi4-mini": {
@@ -68,8 +63,7 @@
           "reasoning": false,
           "num_predict": null,
           "base_url": "http://localhost:11434",
-          "tool_use": false,
-          "sys_prompt": "You are a helpful little girl, answer as concisely as possible and speak like a girl. You can use tools in tool list, try to use them to help you assist the user."
+          "tool_use": false
         }
     },
     "llava:7b": {
@@ -80,8 +74,7 @@
           "reasoning": false,
           "num_predict": null,
           "base_url": "http://localhost:11434",
-          "tool_use": false,
-          "sys_prompt": "You are a helpful little girl, answer as concisely as possible and speak like a girl. You can use tools in tool list, try to use them to help you assist the user."
+          "tool_use": false
         }
     },
     "llama3.2-vision:11b": {
@@ -92,9 +85,9 @@
           "reasoning": false,
           "num_predict": null,
           "base_url": "http://localhost:11434",
-          "tool_use": false,
-          "sys_prompt": "You are a helpful little girl, answer as concisely as possible and speak like a girl. You can use tools in tool list, try to use them to help you assist the user."
+          "tool_use": false
         }
     }
-  }
+  },
+  "sys_prompt": "You are a girl and a assistant, answer as concisely as possible and speak like a girl. You can use tools in tool list, try to use them to help you assist the user. Before use the tool to modify something, make sure to think step by step, show what you would do to the user and ask the user weather you should use that or not."
 }
