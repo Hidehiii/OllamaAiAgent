@@ -6,3 +6,6 @@ langgraph==1.0.4
 duckduckgo-search==8.1.1
 ddgs==9.9.3
 rizaio==0.12.0
+pillow==10.2.0
+mss==10.1.0
+pygetwindow==0.0.9

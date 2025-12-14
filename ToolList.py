@@ -15,6 +15,8 @@ TOOL_LIST=[
     System.file_search,
     System.move_file,
 
+    System.take_screenshot,
+
     # DuckDuckGoSearch
     DuckDuckGoSearch.duck_duck_go_search_with_simple_result,
     DuckDuckGoSearch.duck_duck_go_search_with_detail_result,
