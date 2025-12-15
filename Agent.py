@@ -51,8 +51,8 @@ class LocalAiAgent:
         )
         self.middle_ware = [
             PIIMiddleware(pii_type="ip"),
-            PIIMiddleware(pii_type="email_address"),
-            PIIMiddleware(pii_type="phone_number"),
+            PIIMiddleware(pii_type="email"),
+            PIIMiddleware(pii_type="mac_address"),
             PIIMiddleware(pii_type="credit_card"),
             SummarizationMiddleware(model=self.model),
             HumanInTheLoopMiddleware(interrupt_on={"send_email": {"allowed_decisions": ["approve", "reject"]}}),
