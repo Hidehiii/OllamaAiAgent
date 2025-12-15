@@ -51,6 +51,9 @@ class LocalAiAgent:
         )
         self.middle_ware = [
             PIIMiddleware(pii_type="ip"),
+            PIIMiddleware(pii_type="email_address"),
+            PIIMiddleware(pii_type="phone_number"),
+            PIIMiddleware(pii_type="credit_card"),
             SummarizationMiddleware(model=self.model),
             HumanInTheLoopMiddleware(interrupt_on={"send_email": {"allowed_decisions": ["approve", "reject"]}}),
         ]
@@ -63,28 +66,128 @@ class LocalAiAgent:
         )
 
     def get_agent(self):
+        """
+        Get the underlying agent instance.
+        :return:  The agent instance.
+        """
         return self.agent
 
-    def invoke(self, user_input: str, img_input: list[str] = None):
+    def invoke(self,
+               user_input: str,
+               img_url: list[str] | str = None,
+               img_base64: list[str] | str = None,
+               img_base64_type: list[str] | str = None):
+        """
+        Invoke the agent with user input and optional images.
+        The agent reply will be returned as a whole.
+        :param user_input: The str input from the user.
+        :param img_url:  The image URL(s).
+        :param img_base64:  The image data in base64 format.
+        :param img_base64_type:  The image type(s) corresponding to img_base64, e.g., "png", "jpeg".
+        :return:  The agent's response.
+        """
         return self.agent.invoke(
-            input=self._convert_to_messages(user_input=user_input, img_input=img_input),
+            input=self._convert_to_messages(user_input=user_input,
+                                            img_url=img_url,
+                                            img_base64=img_base64,
+                                            img_base64_type=img_base64_type),
             config=self.context_config
         )
 
-    def stream_messages(self, user_input: str, img_input: list[str] = None):
+    def stream_messages(self,
+                        user_input: str,
+                        img_url: list[str] | str = None,
+                        img_base64: list[str] | str = None,
+                        img_base64_type: list[str] | str = None):
+        """
+        Stream the agent's response message by message.(Word by word)
+        The agent reply will be returned as a generator.
+        :param user_input:  The str input from the user.
+        :param img_url:  The image URL(s).
+        :param img_base64:  The image data in base64 format.
+        :param img_base64_type:  The image type(s) corresponding to img_base64, e.g., "png", "jpeg".
+        :return:  A generator yielding the agent's response messages.
+        """
         return self.agent.stream(
-            input=self._convert_to_messages(user_input=user_input, img_input=img_input),
+            input=self._convert_to_messages(user_input=user_input,
+                                            img_url=img_url,
+                                            img_base64=img_base64,
+                                            img_base64_type=img_base64_type),
             config=self.context_config,
             stream_mode="messages"
         )
 
-    def _convert_to_messages(self, user_input: str, img_input: list[str], role: str = "user") -> dict:
-        return {
+    def _convert_to_messages(self,
+                             user_input: str,
+                             img_url: list[str] | str,
+                             img_base64: list[str] | str,
+                             img_base64_type: list[str] | str,
+                             role: str = "user") -> dict:
+        """
+        Convert user input and images to message format.
+        :param user_input:  The str input from the user.
+        :param img_url:  The image URL(s).
+        :param img_base64:  The image data in base64 format.
+        :param img_base64_type:  The image type(s) corresponding to img_base64, e.g., "png", "jpeg".
+        :param role:  Role of the message, e.g., "user" or "assistant".
+        :return:  Message dict containing user input and images.
+        """
+        msg = {
             "messages": [
-                {
-                    "role": role,
-                    "content": user_input,
-                    "images": img_input if img_input is not None else []
-                }
+                {"role": role, "content": [{"type": "text", "text": user_input}]}
             ]
         }
+        if img_url is not None:
+            img_msg = self._convert_image_url_to_message(img_url=img_url, role=role)
+            msg["messages"].append(img_msg)
+        if img_base64 is not None and img_base64_type is not None:
+            img_msg = self._convert_image_base64_to_message(img_base64=img_base64, img_base64_type=img_base64_type, role=role)
+            msg["messages"].append(img_msg)
+        return msg
+
+    def _convert_image_url_to_message(self,
+                                      img_url: list[str] | str,
+                                      role: str) -> dict:
+        """
+        Convert image URL to message format.
+        :param img_url:  The image URL(s).
+        :param role:  Role of the message, e.g., "user" or "assistant".
+        :return:  Message dict containing the image URL(s).
+        """
+        img_msgs = []
+        if isinstance(img_url, str):
+            img_msgs.append({"type": "image_url", "image_url": img_url})
+            return {"role": role, "content": img_msgs}
+        else:
+            for img_url in img_url:
+                img_msgs.append({"type": "image_url", "image_url": img_url})
+            return {"role": role, "content": img_msgs}
+
+    def _convert_image_base64_to_message(self,
+                                         img_base64: list[str] | str,
+                                         img_base64_type: list[str] | str,
+                                         role: str) -> dict:
+        """
+        Convert base64 image to message format.
+        :param img_base64: Data in base64 format.
+        :param img_base64_type:  Image type, e.g., "png", "jpeg".
+        :param role:  Role of the message, e.g., "user" or "assistant".
+        :return:  Message dict containing the image data.
+        """
+        img_msgs = []
+        if isinstance(img_base64, str) and isinstance(img_base64_type, str):
+            img_msgs.append({"type": "image", "base64": img_base64, "mime_type": "image/" + img_base64_type})
+            return {"role": role, "content": img_msgs}
+        elif isinstance(img_base64, list) and isinstance(img_base64_type, list):
+            for img_base64, img_type in zip(img_base64, img_base64_type):
+                img_msgs.append({"type": "image", "base64": img_base64, "mime_type": "image/" + img_type})
+            return {"role": role, "content": img_msgs}
+        elif isinstance(img_base64, list) and isinstance(img_base64_type, str):
+            for img_base64 in img_base64:
+                img_msgs.append({"type": "image", "base64": img_base64, "mime_type": "image/" + img_base64_type})
+            return {"role": role, "content": img_msgs}
+        elif isinstance(img_base64, str) and isinstance(img_base64_type, list):
+            img_msgs.append({"type": "image", "base64": img_base64, "mime_type": "image/" + img_base64_type[0]})
+            return {"role": role, "content": img_msgs}
+        else:
+            raise ValueError("img_base64 and img_base64_type must be str or list.")

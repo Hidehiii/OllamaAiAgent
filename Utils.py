@@ -31,6 +31,6 @@ def print_agent_stream_response(agent_response, stream_mode : StreamMode):
     print("======================AI Response======================")
     if stream_mode == "messages":
         for token, meta in agent_response:
-            print(convert_agent_stream_output_to_readable_text(meta['langgraph_node'], token.content_blocks, stream_mode), end="")
+            print(convert_agent_stream_output_to_readable_text(meta['langgraph_node'], token.content_blocks, stream_mode), end="", flush=True)
     else:
         raise ValueError(f"Unsupported stream mode: {stream_mode}")

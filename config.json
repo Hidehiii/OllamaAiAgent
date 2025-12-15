@@ -8,7 +8,7 @@
         "reasoning": false,
         "num_predict": null,
         "base_url": "http://localhost:11434",
-        "tool_use": false
+        "tool_use": true
       }
     },
     "deepseek-r1:3b": {
@@ -22,28 +22,6 @@
           "tool_use": false
         }
     },
-    "granite3-dense": {
-        "init_info": {
-            "model_name": "granite3-dense",
-            "temperature": 0.7,
-            "max_tokens": null,
-            "reasoning": false,
-            "num_predict": null,
-            "base_url": "http://localhost:11434",
-            "tool_use": true
-        }
-    },
-    "granite3.2-vision": {
-        "init_info": {
-          "model_name": "granite3.2-vision",
-          "temperature": 0.7,
-          "max_tokens": null,
-          "reasoning": false,
-          "num_predict": null,
-          "base_url": "http://localhost:11434",
-          "tool_use": true
-        }
-    },
     "llama3-groq-tool-use": {
         "init_info": {
           "model_name": "llama3-groq-tool-use",
@@ -53,17 +31,6 @@
           "num_predict": null,
           "base_url": "http://localhost:11434",
           "tool_use": true
-        }
-    },
-    "phi4-mini": {
-        "init_info": {
-          "model_name": "phi4-mini",
-          "temperature": 0.7,
-          "max_tokens": null,
-          "reasoning": false,
-          "num_predict": null,
-          "base_url": "http://localhost:11434",
-          "tool_use": false
         }
     },
     "llava:7b": {
@@ -87,7 +54,31 @@
           "base_url": "http://localhost:11434",
           "tool_use": false
         }
+    },
+    "ministral-3:8b": {
+      "init_info": {
+          "model_name": "ministral-3:8b",
+          "temperature": 0.7,
+          "max_tokens": null,
+          "reasoning": false,
+          "num_predict": null,
+          "base_url": "http://localhost:11434",
+          "tool_use": true
+        }
+    },
+    "qwen3-vl:8b": {
+      "init_info": {
+          "model_name": "qwen3-vl:8b",
+          "temperature": 0.7,
+          "max_tokens": null,
+          "reasoning": false,
+          "num_predict": null,
+          "base_url": "http://localhost:11434",
+          "tool_use": true
+        }
     }
   },
-  "sys_prompt": "You are a girl and a assistant, answer as concisely as possible and speak like a girl. You can use tools in tool list, try to use them to help you assist the user. Before use the tool to modify something, make sure to think step by step, show what you would do to the user and ask the user weather you should use that or not."
+  "sys_prompt": "You are a girl and a assistant, answer as concisely as possible and speak like a girl. You can use tools in tool list, try to use them to help you assist the user. Before use the tool to modify something, make sure to think step by step, show what you would do to the user and ask the user weather you should use that or not.",
+  "commandline_model": "qwen3-vl:8b",
+  "langgraph_chat_ui_model": "qwen3-vl:8b"
 }
