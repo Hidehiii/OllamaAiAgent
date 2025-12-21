@@ -2,7 +2,10 @@ from langchain.tools import tool
 import base64
 
 @tool
-def encode_base64_from_image_bytes(data: bytes, format: str, add_prefix: bool = True) -> str:
+def encode_base64_from_image_bytes(
+        data: bytes,
+        format: str,
+        add_prefix: bool = True) -> str:
     """
     Encode image's bytes data to base64 string.
     :param data:  The bytes data to encode.

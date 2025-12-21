@@ -1,5 +1,6 @@
 from Tools import System
 from Tools import DuckDuckGoSearch
+from Tools import Algorithm
 
 TOOL_LIST=[
     # System
@@ -15,10 +16,16 @@ TOOL_LIST=[
     System.file_search,
     System.move_file,
 
+    System.read_file_binary,
+    System.read_image_file_as_base64,
+
     System.take_screenshot,
 
     # DuckDuckGoSearch
     DuckDuckGoSearch.duck_duck_go_search_with_simple_result,
     DuckDuckGoSearch.duck_duck_go_search_with_detail_result,
     DuckDuckGoSearch.duck_duck_go_search_with_specific_parameter,
+
+    # Algorithm
+    Algorithm.encode_base64_from_image_bytes,
 ]

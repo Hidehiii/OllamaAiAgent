@@ -10,6 +10,7 @@ import mss
 import mss.tools
 import pygetwindow as gw
 import platform
+import base64
 
 @tool
 def get_current_directory():
@@ -53,6 +54,56 @@ delete_file = DeleteFileTool()
 file_search = FileSearchTool()
 
 move_file = MoveFileTool()
+
+@tool
+def read_file_binary(
+        file_path: str,
+        offset: int = 0,
+        length: int = -1
+) -> bytes:
+    """
+    Read binary data from a specified location in a file.
+
+    :param file_path: File path.
+    :param offset: Offset to start(in bytes), calculated from the beginning of the file
+    :param length: The length of bytes to read, -1 means the whole file
+
+    :return: Binary data of the specified range
+    """
+    try:
+        with open(file_path, 'rb') as f:
+            f.seek(offset)  # move ptr to specified location
+            binary_data = f.read(length)  # read data in specified range
+        return binary_data
+    except Exception as e:
+        raise Exception(f"Failed to read data from the specified range：{str(e)}")
+
+@tool
+def read_image_file_as_base64(
+        file_path: str,
+        offset: int = 0,
+        length: int = -1,
+        add_prefix: bool = True
+) -> str:
+    """
+    Read data from specified location in an image file and encode into base64 data.
+    :param file_path: File path.
+    :param offset: Offset to start(in bytes), calculated from the beginning of the file
+    :param length: The length of bytes to read, -1 means the whole file
+    :param add_prefix: Whether to add the data URI prefix.
+    :return: Base64 encoded string.
+    """
+    try:
+        with open(file_path, 'rb') as f:
+            f.seek(offset)  # move ptr to specified location
+            binary_data = f.read(length)  # read data in specified range
+            encoded_data = base64.b64encode(binary_data).decode('utf-8')
+            if add_prefix:
+                return f"data:image/{format};base64,{encoded_data}"
+            return encoded_data
+    except Exception as e:
+        raise Exception(f"Failed to read data from the specified range：{str(e)}")
+
 
 @tool
 def take_screenshot(
